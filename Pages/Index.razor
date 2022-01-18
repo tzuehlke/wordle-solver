@@ -1,0 +1,62 @@
+﻿@page "/"
+@page "/Index"
+
+<PageTitle>Index</PageTitle>
+
+<h1>Wordle Solver</h1>
+<!--
+<p>Wordle...</p>
+<p><a class="link" href="https://github.com/tzuehlke/wordle-solver">Source at Github</a></p>
+-->
+<p>
+    <div class="form-floating">
+        <input class="form-control" type="text" style="text-transform: uppercase" id="possCharacters" @bind=PossibleCharacters>
+        <label for="possCharacters">Possible Characters</label>
+    </div>
+    <div class="form-floating">
+        <input class="form-control" type="text" style="text-transform: uppercase" id="mustCharacters" @bind=MustCharacters>
+        <label for="mustCharacters">Must Characters</label>
+    </div>
+        <div class="form-floating">
+        <input class="form-control" type="text" style="text-transform: uppercase" id="regEx" @bind=RegEx>
+        <label for="regEx">RegEx e.g.: ^.[^RI].[^SI]E$</label>
+    </div>
+    <button class="btn btn-primary" @onclick="Search">Search</button>
+</p>
+<p>
+@if(LastException !=null){
+    <div class="bg-warning text-white">@LastException.Message</div>
+}
+<div class="text-muted">
+    <div class="fw-light lh-1" style="font-size: x-small !important">@StatusMsg</div>
+</div>
+<!-- <textarea class="form-control fs-6 fw-light">@StatusMsg</textarea> -->
+@if(IsSearching){
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Searching...</span>
+    </div>
+}
+@if(!(Results == null || IsSearching))
+{
+    <table class="table">
+    <thead>
+        <tr>
+            <th>Result (@Results.Count)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var word in Results)
+        {
+            <tr>
+                <td>@word</td>
+            </tr>
+        }
+    </tbody>
+    </table>
+}
+</p>
+
+@code{
+    
+
+}

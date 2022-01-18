@@ -1,0 +1,61 @@
+﻿@page "/statistic"
+@using System.Text.RegularExpressions
+@inject HttpClient Http
+
+<PageTitle>Statistic</PageTitle>
+
+<h1>Statistic of letters</h1>
+
+<p>The dictionary contains @words.Length word with 5 letters.</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Letter</th>
+            <th>Count</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var k in statistic.Keys.OrderBy(key => key))
+        {
+            <tr>
+                <td>@k</td>
+                <td>@statistic[k]</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private Dictionary<char, int> statistic = new Dictionary<char, int>();
+    private string[] words = new string[0];
+
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine("calculating statistic");
+        //forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+        var filecontent = await Http.GetStringAsync("data/wordle.csv");
+        Console.WriteLine("file loaded");
+        words = Regex.Split(filecontent, "\r\n|\r|\n");
+        Console.WriteLine(words.Count());
+        //Console.WriteLine(words[0]);
+        //Console.WriteLine(words[3]);
+        foreach(var word in words){
+            //Console.WriteLine(word);
+            for(int i=0; i<5; i++){
+                char letter = word[i];
+                //Console.WriteLine(letter);
+                if(statistic.ContainsKey(letter)){
+                    //Console.WriteLine(letter+" exists with "+statistic[letter]);
+                    statistic[letter] = statistic[letter] + 1;
+                    //statistic.Add()
+                }else{
+                    statistic.Add(letter, 1);
+                    //Console.WriteLine(letter+" not exists");
+                }
+            }
+        }
+        Console.WriteLine("statistic calculated");
+    }
+
+
+}
