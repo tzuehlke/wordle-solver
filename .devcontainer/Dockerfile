@@ -14,3 +14,9 @@ RUN if [ "${NODE_VERSION}" != "none" ]; then su vscode -c "umask 0002 && . /usr/
 
 # [Optional] Uncomment this line to install global node packages.
 # RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && npm install -g <your-package-here>" 2>&1
+
+# Install AzCopy
+RUN mkdir /opt/azcopy \
+    && wget -O /opt/azcopy/azcopy.tar.gz https://aka.ms/downloadazcopy-v10-linux \
+    && cd /opt/azcopy \
+    && tar -xf azcopy.tar.gz --strip-components 1
