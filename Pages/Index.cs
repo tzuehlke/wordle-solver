@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System;
 using System.Net.Http;
 using Microsoft.AspNetCore.Components;
+using System.Text.RegularExpressions;
 
     public partial class Index
     {
@@ -44,12 +45,9 @@ using Microsoft.AspNetCore.Components;
 
         public async Task<string[]> Load(){
             //Console.WriteLine("Load...");
-            await SetStatusMsg("loading wordlist...", false);
             HttpClient client = new HttpClient();
             var filecontent = await client.GetStringAsync(NavManager.BaseUri+"data/wordle.csv");
-            await SetStatusMsg("✔", true);
-            var result = System.Text.RegularExpressions.Regex.Split(filecontent, "\r\n|\r|\n");
-            Console.WriteLine(result.Count());
+            var result = Regex.Split(filecontent, "\r\n|\r|\n");
             return result;
         }
 
@@ -62,18 +60,20 @@ using Microsoft.AspNetCore.Components;
             this.StateHasChanged();
             await Task.Delay(100);
             try {
+                await SetStatusMsg("loading wordlist...", false);
                 if(words == null)
                 {
                     words = await Load();
                 }
+                await SetStatusMsg(String.Format("✔ ({0})", words.Count()), true);
                 var allWords = words.ToList();
                 PossibleCharacters = PossibleCharacters.ToUpperInvariant();
                 await SetStatusMsg("words with possible character...", false);
                 var results = String.IsNullOrEmpty(PossibleCharacters)||PossibleCharacters.Equals("*") ? 
                                 allWords : 
-                                allWords.FindAll((string s) => System.Text.RegularExpressions.Regex.IsMatch(s, "^["+PossibleCharacters+"]{5}$"));
+                                allWords.FindAll((string s) => Regex.IsMatch(s, "^["+PossibleCharacters+"]{5}$"));
                 //Console.WriteLine("possChar: " + results.Count);
-                await SetStatusMsg(results.Count.ToString(), true);
+                await SetStatusMsg(String.Format("✔ ({0})", results.Count()), true);
                 if(!String.IsNullOrEmpty(MustCharacters)){
                     await SetStatusMsg("words with must character...", false);
                     MustCharacters = MustCharacters.ToUpperInvariant();
@@ -84,16 +84,16 @@ using Microsoft.AspNetCore.Components;
                     }
                     searchPattern += ".+";
                     Console.WriteLine("mustChar SearchPattern: " + searchPattern);
-                    results = results.FindAll((string s) => System.Text.RegularExpressions.Regex.IsMatch(s, searchPattern));
+                    results = results.FindAll((string s) => Regex.IsMatch(s, searchPattern));
                     //Console.WriteLine("mustChar: " + results.Count);
-                    await SetStatusMsg(results.Count.ToString(), true);
+                    await SetStatusMsg(String.Format("✔ ({0})", results.Count()), true);
                 }
                 if(!String.IsNullOrEmpty(RegEx)){
                     await SetStatusMsg("words with regex...", false);
                     RegEx = RegEx.ToUpperInvariant();
-                    results = results.FindAll((string s) => System.Text.RegularExpressions.Regex.IsMatch(s, RegEx));
+                    results = results.FindAll((string s) => Regex.IsMatch(s, RegEx));
                     //Console.WriteLine("RegEx: " + results.Count);
-                    await SetStatusMsg(results.Count.ToString(), true);
+                    await SetStatusMsg(String.Format("✔ ({0})", results.Count()), true);
                 }
                 Results.AddRange(results);
                 IsSearching = false;
