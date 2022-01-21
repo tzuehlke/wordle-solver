@@ -27,7 +27,7 @@ using System.Text.RegularExpressions;
             LastException = null;
             RegEx = String.Empty;
             MustCharacters = String.Empty;
-            PossibleCharacters = "*";
+            PossibleCharacters = "";
             Results = null;
             StatusMsg = new MarkupString();
             //Load();
