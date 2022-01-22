@@ -23,3 +23,22 @@ The dictionary will be searched in 3 steps. All steps are optional.
 
 
 # Build & Deploy
+The solution using the remote container extention of Visual Studio Code.
+1. Build and test
+    ```
+    dotnet build
+    dotnet watch run
+    ```
+1. publish
+    ```
+    dotnet publish
+    ```
+1. copy to Azure storage account with AzCopy
+   * AzCopy is installed at `/opt/azcopy`
+   * activate the static web feature at your storage account
+   * get a SAS Token of the storage account and the storage account URL in the `copytostorage.sh` file
+   * ```
+     TARGET='https://<YOURSTORAGE ACCOUNT>.blob.core.windows.net/$web'
+     SAS='?sv=2020-08-04...'
+     ```
+   * run the copy bash script `./copytostorage.sh`
