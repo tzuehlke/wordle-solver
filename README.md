@@ -4,7 +4,7 @@ This app helps to solve the daily [Wordle](https://www.powerlanguage.co.uk/wordl
 
 A description of the app is comming soon in a blogpost.
 
-You can use it on [wordle.zuehlke.cloud](wordle.zuehlke.cloud).
+You can use it on [wordle.zuehlke.cloud](https://wordle.zuehlke.cloud).
 
 ![Overview picture](https://user-images.githubusercontent.com/32843441/150650516-1998923f-b836-4256-99b0-a5e3e86a3322.png)
 
