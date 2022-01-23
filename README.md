@@ -12,8 +12,8 @@ You can use it on [wordle.zuehlke.cloud](https://wordle.zuehlke.cloud).
 # How to use
 The dictionary will be searched in 3 steps. All steps are optional.
 1. Step: use the unsued letters for the "Possible Characters" field. The dictionary will be filtert for words, that only conatains this characters.
-1. Step: use the green and orange letters in "Must Characters". The wordlist from step 1 will be filtert for words, that contains all the letters in this field only.
-1. Step: if you have positonal information of the letters, you can write them as [regular expression](https://cheatography.com/davechild/cheat-sheets/regular-expressions/). You can write `.....` for no positional definition. If you have a green letter, you should write the letter as the correct position (e.g. if you have an E at second position, you can write `.E...`). If you have an orange letter, it is at the wrong spot but the word contains it at least once and you should write a regex not (e.g. if an A is not correct at the third position, you can write `..[^A]..`).
+1. Step: use the green and yellow letters in "Must Characters". The wordlist from step 1 will be filtert for words, that contains all the letters in this field only.
+1. Step: if you have positonal information of the letters, you can write them as [regular expression](https://cheatography.com/davechild/cheat-sheets/regular-expressions/). You can write `.....` for no positional definition. If you have a green letter, you should write the letter at the correct position (e.g. if you have an E at second position, you can write `.E...`). If you have an yellow letter, it is at the wrong spot but the word contains it at least once and you should write a "not" at the position in regex (e.g. if an A is not correct at the third position, you can write `..[^A]..`).
 
 |Wordle|Solver|
 |---|---|
